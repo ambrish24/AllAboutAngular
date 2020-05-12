@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { PasswordgeneratorModule } from './passwordgenerator/passwordgenerator.module';
+import { CardsModule } from './cards/cards.module';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { PasswordgeneratorModule } from './passwordgenerator/passwordgenerator.m
   ],
   imports: [
     BrowserModule,
-    PasswordgeneratorModule
+    PasswordgeneratorModule,
+    CardsModule
   ],
   providers: [
 
