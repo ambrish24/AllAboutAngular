@@ -5,16 +5,20 @@ import { AppComponent } from './app.component';
 import { PasswordgeneratorModule } from './passwordgenerator/passwordgenerator.module';
 import { CardsModule } from './cards/cards.module';
 import { TypinggameModule } from './typinggame/typinggame.module';
+import { PagesdirectivesModule } from './pagesdirectives/pagesdirectives.module';
+import { ClassDirective } from './pagesdirective/class.directive';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ClassDirective
   ],
   imports: [
     BrowserModule,
     PasswordgeneratorModule,
     CardsModule,
-    TypinggameModule
+    TypinggameModule,
+    PagesdirectivesModule
   ],
   providers: [
 
