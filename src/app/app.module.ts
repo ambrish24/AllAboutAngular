@@ -1,23 +1,15 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
-import {AppComponent} from './app.component';
-import {CommonModule} from '@angular/common';
-
+import { AppComponent } from './app.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { PageListComponent } from './page-list/page-list.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    CommonModule,
-    BrowserModule
-  ],
-  providers: [
-
-  ],
-  bootstrap: [
-    AppComponent
-  ]
+  declarations: [AppComponent, SearchBarComponent, PageListComponent],
+  imports: [BrowserModule, HttpClientModule],
+  providers: [],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

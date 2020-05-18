@@ -2,3 +2,7 @@
 
 @import '~bulma/css/bulma.css';
 @import '~bootstrap/dist/css/bootstrap.css';
+
+.searchmatch {
+  font-weight: bold;
+}
