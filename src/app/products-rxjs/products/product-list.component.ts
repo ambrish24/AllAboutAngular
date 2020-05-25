@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 
 import {Product} from './product';
 import {ProductService} from './product.service';
-import {combineLatest, EMPTY, Observable, Subject} from 'rxjs';
-import {catchError, map, tap} from 'rxjs/operators';
+import {BehaviorSubject, combineLatest, EMPTY, Observable, Subject} from 'rxjs';
+import {catchError, map, startWith, tap} from 'rxjs/operators';
 import {ProductCategoryService} from '../product-categories/product-category.service';
 
 @Component({
@@ -14,7 +14,11 @@ export class ProductListComponent {
   pageTitle = 'Product List';
   errorMessage = '';
 
-  private categorySelectedSubject = new Subject<number>();
+  // private categorySelectedSubject = new Subject<number>();
+
+  // TODO setting the initial value of selectedCategoryId for Action Stream Observable using BehaviorSubject
+  //  We can also use startWith() RxJS operator as shown in combineLatest() below.
+  private categorySelectedSubject = new BehaviorSubject<number>(0);
   categorySelectedAction$ = this.categorySelectedSubject.asObservable();
 
   // TODO : Usage of RxJS map(), combineLatest() function, Arrays filter() function
@@ -22,6 +26,11 @@ export class ProductListComponent {
   products$ = combineLatest([
     this.productService.productsWithCategory$,
     this.categorySelectedAction$
+      // TODO setting the initial value of selectedCategoryId for Action Stream Observable using startWith() operator
+      //  We can also use BehaviorSubject here
+      /*.pipe(
+        startWith(0)
+      )*/
   ]).pipe(
     map(([products, selectedCategoryId]) =>
       products.filter(product =>
