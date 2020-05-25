@@ -20,7 +20,8 @@ export class ProductService {
               private productCategoryService: ProductCategoryService,
               private supplierService: SupplierService) { }
 
-  // TODO : Usage of RxJS map() operator, Arrays map() function and JS spread operator to update the price of Product.
+  // TODO : Usage of RxJS map() operator, Arrays map() function
+  //  and JS spread operator to update the price of Product.
   /*products$ = this.http.get<Product[]>(this.productsUrl)
     .pipe(
       map(products =>
@@ -41,7 +42,8 @@ export class ProductService {
     );
 
   // tslint:disable-next-line:max-line-length
-  // TODO : Usage of RxJS map(), combineLatest() function, Arrays find() function to combine Products & Categories streams and display Category Name instead of Category ID.
+  // TODO : Usage of RxJS map(), combineLatest() function, Arrays find() function to
+  //  combine Products & Categories streams and display Category Name instead of Category ID.
   productsWithCategory$ = combineLatest([
     this.products$,
     this.productCategoryService.productCategories$
@@ -53,7 +55,9 @@ export class ProductService {
         category: categories.find(c => product.categoryId === c.id).name,
         searchKey: [product.productName]
       }) as Product)
-    )
+    ),
+    tap(data => console.log('Products: ', JSON.stringify(data))),
+    catchError(this.handleError)
   );
 
   private fakeProduct() {
