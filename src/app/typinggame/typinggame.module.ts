@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TypinggameComponent} from './typinggame.component';
-import {BrowserModule} from '@angular/platform-browser';
 
 
 @NgModule({
@@ -9,11 +8,13 @@ import {BrowserModule} from '@angular/platform-browser';
     TypinggameComponent
   ],
   imports: [
-    CommonModule,
-    BrowserModule
+    CommonModule
   ],
   bootstrap: [
     TypinggameComponent
+  ],
+  exports: [
+    CommonModule
   ]
 })
 export class TypinggameModule { }

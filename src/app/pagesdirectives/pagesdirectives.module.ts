@@ -13,11 +13,12 @@ import { TimesDirective } from './times.directive';
     TimesDirective
   ],
   imports: [
-    CommonModule,
-    BrowserModule
+    CommonModule
   ],
   bootstrap: [
     PagesdirectivesComponent
-]
+], exports: [
+    CommonModule
+  ]
 })
 export class PagesdirectivesModule { }
