@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import {BehaviorSubject, combineLatest, merge, Observable, Subject, throwError} from 'rxjs';
-import {catchError, tap, map, scan, shareReplay} from 'rxjs/operators';
+import {BehaviorSubject, combineLatest, from, merge, Observable, Subject, throwError} from 'rxjs';
+import {catchError, tap, map, scan, shareReplay, filter, switchMap, mergeMap, toArray} from 'rxjs/operators';
 
 import { Product } from './product';
 import { Supplier } from '../suppliers/supplier';
@@ -59,7 +59,7 @@ export class ProductService {
         searchKey: [product.productName]
       }) as Product)
     ),
-    // tap(data => console.log('Products: ', JSON.stringify(data))),
+    tap(data => console.log('Products: ', JSON.stringify(data))),
     shareReplay(1),
     catchError(this.handleError)
   );
@@ -72,7 +72,7 @@ export class ProductService {
       map(([products, selectedProductId]) =>
         products.find(product => product.id === selectedProductId)
       ),
-      // tap(product => console.log('selectedProduct', product)),
+      tap(product => console.log('selectedProduct', product)),
       shareReplay(1),
       catchError(this.handleError)
     );
@@ -88,6 +88,29 @@ export class ProductService {
       scan((acc: Product[], value: Product) => [...acc, value])
     );
 
+  // TODO: Get It All Approach
+  selectedProductSuppliers$ = combineLatest([
+    this.selectedProduct$,
+    this.supplierService.suppliers$
+  ])
+    .pipe(
+      map(([selectedProduct, suppliers]) =>
+        suppliers.filter(supplier => selectedProduct.supplierIds.includes(supplier.id))
+      ),
+      catchError(this.handleError)
+    );
+
+  /*selectedProductSuppliers$ = this.selectedProduct$
+    .pipe(
+      filter(selectedProduct => Boolean(selectedProduct)),
+      switchMap(selectedProduct =>
+        from(selectedProduct.supplierIds)
+          .pipe(
+            mergeMap(supplierId => this.http.get<Supplier>(`${this.suppliersUrl}/${supplierId}`)),
+            toArray(),
+            tap(suppliers => console.log('product suppliers', JSON.stringify(suppliers)))
+          )));
+*/
   selectedProductChanged(selectedProductId: number): void {
     this.productSelectedSubject.next(selectedProductId);
   }
