@@ -23,14 +23,35 @@ export class ProductListComponent {
 
   // TODO : Usage of RxJS map(), combineLatest() function, Arrays filter() function
   //  to filter Products based on Category Action Stream
-  products$ = combineLatest([
+  /*products$ = combineLatest([
     this.productService.productsWithCategory$,
     this.categorySelectedAction$
       // TODO setting the initial value of selectedCategoryId for Action Stream Observable using startWith() operator
       //  We can also use BehaviorSubject here
-      /*.pipe(
+      /!*.pipe(
         startWith(0)
-      )*/
+      )*!/
+  ]).pipe(
+    map(([products, selectedCategoryId]) =>
+      products.filter(product =>
+        selectedCategoryId ? product.categoryId === selectedCategoryId : true
+      )),
+    tap(data => console.log('Products: ', JSON.stringify(data))),
+    catchError(err => {
+      this.errorMessage = err;
+      return EMPTY;
+    })
+  );*/
+
+  // TODO : Usage of RxJS merge(), scan() function to Add Product Action
+  products$ = combineLatest([
+    this.productService.productsWithAdd$,
+    this.categorySelectedAction$
+    // TODO setting the initial value of selectedCategoryId for Action Stream Observable using startWith() operator
+    //  We can also use BehaviorSubject here
+    /*.pipe(
+      startWith(0)
+    )*/
   ]).pipe(
     map(([products, selectedCategoryId]) =>
       products.filter(product =>
@@ -42,6 +63,7 @@ export class ProductListComponent {
       return EMPTY;
     })
   );
+
 
   /*products$ = this.productService.productsWithCategory$
     .pipe(
@@ -69,7 +91,7 @@ export class ProductListComponent {
   }*/
 
   onAdd(): void {
-    console.log('Not yet implemented');
+    this.productService.addProduct();
   }
 
   // TODO We used + sign here to cast string into number
