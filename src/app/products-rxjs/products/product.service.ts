@@ -59,7 +59,7 @@ export class ProductService {
         searchKey: [product.productName]
       }) as Product)
     ),
-    tap(data => console.log('Products: ', JSON.stringify(data))),
+    // tap(data => console.log('Products: ', JSON.stringify(data))),
     shareReplay(1),
     catchError(this.handleError)
   );
@@ -72,7 +72,7 @@ export class ProductService {
       map(([products, selectedProductId]) =>
         products.find(product => product.id === selectedProductId)
       ),
-      tap(product => console.log('selectedProduct', product)),
+      // tap(product => console.log('selectedProduct', product)),
       shareReplay(1),
       catchError(this.handleError)
     );

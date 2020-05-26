@@ -36,7 +36,6 @@ export class ProductListComponent {
       products.filter(product =>
         selectedCategoryId ? product.categoryId === selectedCategoryId : true
       )),
-    tap(data => console.log('Products: ', JSON.stringify(data))),
     catchError(err => {
       this.errorMessage = err;
       return EMPTY;
@@ -57,7 +56,6 @@ export class ProductListComponent {
       products.filter(product =>
         selectedCategoryId ? product.categoryId === selectedCategoryId : true
       )),
-    tap(data => console.log('Products: ', JSON.stringify(data))),
     catchError(err => {
       this.errorMessage = err;
       return EMPTY;

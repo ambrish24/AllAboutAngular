@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import {of, throwError} from 'rxjs';
 import {Supplier} from './supplier';
-import {map} from 'rxjs/operators';
+import {concatMap, map, mergeMap, switchMap, tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,15 +17,36 @@ export class SupplierService {
       )
     );
 
+  suppliersWithConcatMap$ = of(1, 5, 8)
+    .pipe(
+      tap(id => console.log('concatMap source Observable', id)),
+      concatMap(id => this.http.get<Supplier>(`${this.suppliersUrl}/${id}`))
+    );
+
+  suppliersWithMergeMap$ = of(1, 5, 8)
+    .pipe(
+      tap(id => console.log('mergeMap source Observable', id)),
+      mergeMap(id => this.http.get<Supplier>(`${this.suppliersUrl}/${id}`))
+    );
+
+  suppliersWithSwitchMap$ = of(1, 5, 8)
+    .pipe(
+      tap(id => console.log('switchMap source Observable', id)),
+      switchMap(id => this.http.get<Supplier>(`${this.suppliersUrl}/${id}`))
+    );
+
   // TODO : Nesting of Subscribe - Not a Good Practice but since inner subscription is also a
   //  map we will have to perform nesting. Observable<Observable<Supplier>> - Observable of Observable of something
   //  represents Higher Order Observable. We can use higher order RxJS operators in this case. We will have to
   //  explicitly subscribe/unsubscribe as Async Pipe doesn't work with Higher Order Observable
   constructor(private http: HttpClient) {
-    this.suppliersWithMap$
+    /*this.suppliersWithMap$
       .subscribe(o => o.subscribe(
         item => console.log('map result', item)
-      ));
+      ));*/
+    /*this.suppliersWithConcatMap$.subscribe(item => console.log('concatMap result', item));
+    this.suppliersWithMergeMap$.subscribe(item => console.log('mergeMap result', item));
+    this.suppliersWithSwitchMap$.subscribe(item => console.log('switchMap result', item));*/
   }
 
   private handleError(err: any) {
