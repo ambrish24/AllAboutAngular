@@ -89,7 +89,7 @@ export class ProductService {
     );
 
   // TODO: Get It All Approach
-  selectedProductSuppliers$ = combineLatest([
+  /*selectedProductSuppliers$ = combineLatest([
     this.selectedProduct$,
     this.supplierService.suppliers$
   ])
@@ -98,7 +98,20 @@ export class ProductService {
         suppliers.filter(supplier => selectedProduct.supplierIds.includes(supplier.id))
       ),
       catchError(this.handleError)
-    );
+    );*/
+
+  // TODO: Just in Time Approach
+  selectedProductSuppliers$ = this.selectedProduct$
+  .pipe(
+    filter(selectedProduct => Boolean(selectedProduct)),
+      switchMap(selectedProduct =>
+        from(selectedProduct.supplierIds)
+          .pipe(
+            mergeMap(supplierId => this.http.get<Supplier>(`${this.suppliersUrl}/${supplierId}`)),
+            toArray(),
+            tap(suppliers => console.log('product suppliers', JSON.stringify(suppliers)))
+          )));
+
 
   /*selectedProductSuppliers$ = this.selectedProduct$
     .pipe(
