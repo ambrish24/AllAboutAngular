@@ -2,8 +2,9 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 
 import { ProductService } from '../product.service';
 import {Supplier} from '../../suppliers/supplier';
-import {catchError} from 'rxjs/operators';
-import {EMPTY} from 'rxjs';
+import {catchError, filter, map} from 'rxjs/operators';
+import {combineLatest, EMPTY} from 'rxjs';
+import {Product} from '../product';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -12,7 +13,6 @@ import {EMPTY} from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductDetailComponent {
-  pageTitle = 'Product Detail';
   errorMessage = '';
   product;
   productSuppliers: Supplier[] = [];
@@ -32,6 +32,13 @@ export class ProductDetailComponent {
         return EMPTY;
       })
     );
+
+  pageTitle$ = this.product$
+    .pipe(
+      map((p: Product) =>
+        p ? `Product Detail for: ${p.productName}` : null)
+    );
+
 
   constructor(private productService: ProductService) { }
 
