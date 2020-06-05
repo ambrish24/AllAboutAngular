@@ -10,6 +10,7 @@ import {TypinggameModule} from './typinggame/typinggame.module';
 import {PagesdirectivesModule} from './pagesdirectives/pagesdirectives.module';
 import {PasswordgeneratorModule} from './passwordgenerator/passwordgenerator.module';
 import {NgClassNgStyleComponent} from './ngclass-ngstyle/ngclass-ngstyle.component';
+import { FitnessModule } from './fitness/fitness.module';
 
 @NgModule({
   declarations: [AppComponent, NgClassNgStyleComponent],
@@ -20,7 +21,8 @@ import {NgClassNgStyleComponent} from './ngclass-ngstyle/ngclass-ngstyle.compone
     AppRoutingModule,
     TypinggameModule,
     PagesdirectivesModule,
-    PasswordgeneratorModule
+    PasswordgeneratorModule,
+    FitnessModule
   ],
   providers: [],
   bootstrap: [AppComponent]

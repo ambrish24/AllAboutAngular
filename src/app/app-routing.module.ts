@@ -8,6 +8,7 @@ import {TypinggameComponent} from './typinggame/typinggame.component';
 import {PasswordgeneratorComponent} from './passwordgenerator/passwordgenerator.component';
 import {PagesdirectivesComponent} from './pagesdirectives/pagesdirectives.component';
 import {NgClassNgStyleComponent} from './ngclass-ngstyle/ngclass-ngstyle.component';
+import {FitnessComponent} from './fitness/fitness.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,11 @@ import {NgClassNgStyleComponent} from './ngclass-ngstyle/ngclass-ngstyle.compone
         path: 'products',
         loadChildren: () =>
           import('./products-rxjs/products/product.module').then(m => m.ProductModule)
+      },
+      {
+        path: 'auth',
+        loadChildren: () =>
+          import('./fitness/fitness.module').then(m => m.FitnessModule)
       },
       { path: 'typinggame', component: TypinggameComponent },
       { path: 'passwordgenerator', component: PasswordgeneratorComponent },
